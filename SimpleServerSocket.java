@@ -29,7 +29,9 @@ public class SimpleServerSocket extends ServerSocket{
         while(true){
 
             try{
-                simpleRunnable.setSimpleSocket(this.accept());
+                Socket socket = this.accept();
+                simpleRunnable.setSimpleSocket(socket);
+                if(verbose) System.out.println("Received socket connection.");
             }
             catch(SocketException se){
                 se.printStackTrace();

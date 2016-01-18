@@ -5,17 +5,24 @@ import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 
 
-public class SimpleSocket extends Socket {
+public class SimpleSocket {
 
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private Socket socket;
 
-    public SimpleSocket(String ip, int port) throws IOException{
+    public SimpleSocket(String ip, int port) throws IOException {
 
-        super(ip, port);
-        dataInputStream = new DataInputStream(this.getInputStream());
-        dataOutputStream = new DataOutputStream(this.getOutputStream());
+        this.socket = new Socket(ip, port);
+        this.dataInputStream = new DataInputStream(socket.getInputStream());
+        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
+    }
+
+    public SimpleSocket(Socket socket) throws IOException {
+      this.socket = socket;
+      this.dataInputStream = new DataInputStream(socket.getInputStream());
+      this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
 
     public String readString(){

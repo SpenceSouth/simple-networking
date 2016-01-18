@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 public class SimpleServerSocket extends ServerSocket{
 
     private int port;
-    private boolean verbose = true;
+    private boolean verbose = false;
     private ExecutorService executorService;
 
     public SimpleServerSocket(int port) throws IOException{

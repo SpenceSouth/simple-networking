@@ -1,3 +1,12 @@
+## General purpose
+
+This generic API provides a very simple and quick to implement solution for creating basic socket connections between two computers.  The API supports parallel processing, with an default of 10 threads.  This number can be altered by passing an integer as the second argument when creating a new SimpleServerSocket object.
+
+### Future improvements include:
+- Encryption support
+- Cross compatible API's for Python, Ruby, and C
+
+
 ## Basic implementation of server side socket code
     public class ServerTest {
         public static void main(String args[]) throws Exception{
@@ -16,7 +25,6 @@
         System.out.println(simpleSocket.readString());
         }
     }
-
 
 
 --------------------------------------------------------------------------------

@@ -22,8 +22,8 @@ This generic API provides a very simple and quick to implement solution for crea
 
         @Override
         public void run(){
-        System.out.println(simpleSocket.readString());
-        simpleSocket.writeString("Hello Client!");
+            System.out.println(simpleSocket.readString());
+            simpleSocket.writeString("Hello Client!");
         }
     }
 

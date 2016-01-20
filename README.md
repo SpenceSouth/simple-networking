@@ -23,6 +23,7 @@ This generic API provides a very simple and quick to implement solution for crea
         @Override
         public void run(){
         System.out.println(simpleSocket.readString());
+        simpleSocket.writeString("Hello Client!");
         }
     }
 
@@ -34,6 +35,7 @@ This generic API provides a very simple and quick to implement solution for crea
     public class ClientTest {
         public static void main(String args[]) throws Exception{
             SimpleSocket simpleSocket = new SimpleSocket("10.0.1.2", 8000);
-            simpleSocket.writeString("Hello world");
+            simpleSocket.writeString("Hello Server!");
+            System.out.println(simpleSocket.readString());
         }
     }

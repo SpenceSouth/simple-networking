@@ -13,7 +13,8 @@ public class SimpleServerSocket extends ServerSocket{
 
     public SimpleServerSocket(int port) throws IOException{
         super(port);
-        executorService = Executors.newFixedThreadPool(10);
+        int numberOfThreads = 1 + Runtime.getRuntime().availableProcessors();
+        executorService = Executors.newFixedThreadPool(numberOfThreads);
     }
 
     public SimpleServerSocket(int port, int threadPoolSize) throws IOException{

@@ -9,7 +9,7 @@ This generic API provides a very simple and quick to implement solution for crea
 
 ## Basic implementation of server side socket code
     public class ServerTest {
-        public static void main(String args[]) throws Exception{
+        public static void main(String args[]) throws Exception {
             SimpleServerSocket server = new SimpleServerSocket(8000);
             server.listen(new SocketThread());
         }
@@ -33,8 +33,8 @@ This generic API provides a very simple and quick to implement solution for crea
 
 ## Basic client side socket connection
     public class ClientTest {
-        public static void main(String args[]) throws Exception{
-            SimpleSocket simpleSocket = new SimpleSocket("10.0.1.2", 8000);
+        public static void main(String args[]) throws Exception {
+            SimpleSocket simpleSocket = new SimpleSocket("localhost", 8000);
             simpleSocket.writeString("Hello Server!");
             System.out.println(simpleSocket.readString());
         }

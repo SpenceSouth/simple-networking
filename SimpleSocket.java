@@ -27,7 +27,7 @@ public class SimpleSocket {
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
 
-    public void setTimeOut(int ms){
+    public void setTimeOut(int ms) throws SocketException {
         this.socket.setSoTimeout(ms);
     }
 

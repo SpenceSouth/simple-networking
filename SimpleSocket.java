@@ -14,15 +14,21 @@ public class SimpleSocket {
     public SimpleSocket(String ip, int port) throws IOException {
 
         this.socket = new Socket(ip, port);
+        this.socket.setSoTimeout(30000);
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
     }
 
     public SimpleSocket(Socket socket) throws IOException {
-      this.socket = socket;
-      this.dataInputStream = new DataInputStream(socket.getInputStream());
-      this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.socket = socket;
+        this.socket.setSoTimeout(30000);
+        this.dataInputStream = new DataInputStream(socket.getInputStream());
+        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+    }
+
+    public void setTimeOut(int ms){
+        this.socket.setSoTimeout(ms);
     }
 
     public String readString(){

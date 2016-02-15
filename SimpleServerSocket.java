@@ -31,6 +31,7 @@ public class SimpleServerSocket extends ServerSocket{
 
             try{
                 Socket socket = this.accept();
+                socket.setSoTimeout(30000);
                 simpleRunnable.setSimpleSocket(socket);
                 if(verbose) System.out.println("Received socket connection.");
             }

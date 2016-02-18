@@ -12,4 +12,6 @@ public abstract class SimpleRunnable implements Runnable {
     public void setSimpleSocket(SimpleSocket simpleSocket){
         this.simpleSocket = simpleSocket;
     }
+
+    abstract public void run();
 }

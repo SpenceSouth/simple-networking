@@ -8,24 +8,27 @@ This generic API provides a very simple and quick to implement solution for crea
 
 
 ## Basic implementation of server side socket code
+    
     public class ServerTest {
         public static void main(String args[]) throws Exception {
-            SimpleServerSocket server = new SimpleServerSocket(8000);
-            server.listen(new SocketThread());
+            SimpleServerSocket<SocketThread> server = new SimpleServerSocket<>(8000, SocketThread.class, 15);
+            server.listen();
         }
     }
-
+    
     /** User created class that extends SimpleRunnable.  This will execute on each socket connection.
-    * Developer has access to the SimpleSocket protected class from SimpleRunnable and can use it's
-    * abstracted methods.*/
+     * Developer has access to the SimpleSocket protected class from SimpleRunnable and can use it's
+     * abstracted methods.*/
     class SocketThread extends SimpleRunnable{
-
+    
         @Override
         public void run(){
             System.out.println(simpleSocket.readString());
             simpleSocket.writeString("Hello Client!");
         }
+    
     }
+
 
 
 --------------------------------------------------------------------------------

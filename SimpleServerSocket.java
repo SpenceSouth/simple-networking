@@ -5,46 +5,53 @@ import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SimpleServerSocket extends ServerSocket{
+public class SimpleServerSocket<SimpleRunnableType extends SimpleRunnable> extends ServerSocket{
 
     private int port;
     private boolean verbose = false;
     private ExecutorService executorService;
+    private Class<SimpleRunnableType> srt;
 
-    public SimpleServerSocket(int port) throws IOException{
+    public SimpleServerSocket(int port, Class<SimpleRunnableType> srt) throws IOException{
         super(port);
         int numberOfThreads = 1 + Runtime.getRuntime().availableProcessors();
         executorService = Executors.newFixedThreadPool(numberOfThreads);
+        this.srt = srt;
     }
 
-    public SimpleServerSocket(int port, int threadPoolSize) throws IOException{
+    public SimpleServerSocket(int port, Class<SimpleRunnableType> srt, int threadPoolSize) throws IOException{
         super(port);
         executorService = Executors.newFixedThreadPool(threadPoolSize);
+        this.srt = srt;
+    }
+
+    private SimpleRunnableType createThread() throws InstantiationException, IllegalAccessException
+    {
+        return srt.newInstance();
     }
 
     public void setVerbose(boolean verbose){
         this.verbose = verbose;
     }
 
-    public void listen(SimpleRunnable simpleRunnable){
+    public void listen(){
+
         while(true){
+
+            SimpleRunnableType socketThread = null;
 
             try{
                 Socket socket = this.accept();
                 socket.setSoTimeout(30000);
-                simpleRunnable.setSimpleSocket(socket);
+                socketThread = createThread();
+                socketThread.setSimpleSocket(socket);
                 if(verbose) System.out.println("Received socket connection.");
             }
-            catch(SocketException se){
+            catch(Exception se){
                 se.printStackTrace();
-                break;
-            }
-            catch(IOException ioe){
-                ioe.printStackTrace();
-                break;
             }
 
-            executorService.submit(simpleRunnable);
+            executorService.execute(socketThread);
 
         }
     }

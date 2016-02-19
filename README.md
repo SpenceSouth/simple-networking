@@ -3,7 +3,8 @@
 This generic API provides a very simple and quick to implement solution for creating basic socket connections between two computers.  The API supports parallel processing, with an default of 10 threads.  This number can be altered by passing an integer as the second argument when creating a new SimpleServerSocket object.
 
 ### Future improvements include:
-- Encryption support
+- AES Encryption support
+- RSA Server to Client encryption
 - Cross compatible API's for Python, Ruby, and C
 
 
@@ -12,6 +13,10 @@ This generic API provides a very simple and quick to implement solution for crea
     public class ServerTest {
         public static void main(String args[]) throws Exception {
             SimpleServerSocket<SocketThread> server = new SimpleServerSocket<>(8000, SocketThread.class, 15);
+            
+            //Encryption support can be added with this call
+            //server.setPrivateKey("private.der");
+            
             server.listen();
         }
     }
@@ -38,7 +43,25 @@ This generic API provides a very simple and quick to implement solution for crea
     public class ClientTest {
         public static void main(String args[]) throws Exception {
             SimpleSocket simpleSocket = new SimpleSocket("localhost", 8000);
+            
+            //Encryption support can be added with this call
+            //simpleSocket.setPublicKey("public.der");
+            
             simpleSocket.writeString("Hello Server!");
             System.out.println(simpleSocket.readString());
         }
     }
+
+
+--------------------------------------------------------------------------------
+
+
+## Encryption
+
+Current encryption support only does client -> server RSA encryption.
+
+To generate the private and public keys needed:
+
+    openssl genrsa -out private.pem 2048
+    openssl pkcs8 -topk8 -in private.pem -outform DER -out private.der -nocrypt
+    openssl rsa -in private.pem -pubout -outform DER -out public.der

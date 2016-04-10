@@ -1,5 +1,6 @@
 package SimpleSocketsJava;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +25,14 @@ public abstract class SimpleRunnable implements Runnable {
 
     public void setPrivateKey(PrivateKey privateKey) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
         this.simpleSocket.setPrivateKey(privateKey);
+    }
+
+    public void setSecretKey(SecretKey key){
+        this.simpleSocket.setSecretKey(key);
+    }
+
+    public void setSecretKey(String key){
+        this.simpleSocket.setSecretKey(key);
     }
 
     abstract public void run();

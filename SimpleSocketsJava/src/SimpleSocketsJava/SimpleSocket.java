@@ -2,6 +2,7 @@ package SimpleSocketsJava;
 
 import SimpleSocketsJava.Security.EncryptionUtils;
 
+import javax.crypto.SecretKey;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class SimpleSocket {
     private Socket socket;
     private PublicKey publicKey = null;
     private PrivateKey privateKey = null;
+    private SecretKey secretKey = null;
 
     public SimpleSocket(String ip, int port) throws IOException {
 
@@ -36,6 +38,14 @@ public class SimpleSocket {
         this.socket.setSoTimeout(30000);
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+    }
+
+    public void setSecretKey(SecretKey key){
+        this.secretKey = key;
+    }
+
+    public void setSecretKey(String key){
+        this.secretKey = EncryptionUtils.aesStringToKey(key);
     }
 
     public void setPublicKey(String publicKeyPath) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
@@ -78,7 +88,15 @@ public class SimpleSocket {
 
             if(privateKey != null) {
                 try {
-                    result = new String(EncryptionUtils.decrypt(privateKey, data), "UTF-8");
+                    result = new String(EncryptionUtils.decryptRsa(privateKey, data), "UTF-8");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            if(secretKey != null) {
+                try {
+                    result = EncryptionUtils.decryptAes(secretKey, new String(data, "UTF-8"));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -99,7 +117,16 @@ public class SimpleSocket {
 
             if(publicKey != null){
                 try {
-                    data = EncryptionUtils.encrypt(publicKey, data);
+                    data = EncryptionUtils.encryptRsa(publicKey, data);
+                }
+                catch (Exception nsae){
+                    nsae.printStackTrace();
+                }
+            }
+
+            if(secretKey != null){
+                try {
+                    data = EncryptionUtils.encryptAes(secretKey, message).getBytes("UTF-8");
                 }
                 catch (Exception nsae){
                     nsae.printStackTrace();

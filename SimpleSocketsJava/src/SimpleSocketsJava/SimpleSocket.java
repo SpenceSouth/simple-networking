@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 
 
 public class SimpleSocket {
@@ -139,6 +140,62 @@ public class SimpleSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int readInteger(){
+        return Integer.parseInt(readString());
+    }
+
+    public void writeInteger(int value){
+        writeString(String.valueOf(value));
+    }
+
+    public ArrayList<String> readArrayList(){
+
+        ArrayList<String> message = new ArrayList<>();
+        int size = readInteger();
+
+        for(int i = 0; i < size; i++){
+            message.add(readString());
+        }
+
+        return message;
+    }
+
+    public void writeArrayList(ArrayList<String> list){
+
+        // Send number of items to expect
+        writeInteger(list.size());
+
+        // Send each item in the list
+        for(String item : list){
+            writeString(item);
+        }
+
+    }
+
+    public String[] readArray(){
+
+        int size = readInteger();
+        String[] message = new String[size];
+
+        for(int i = 0; i < size; i++){
+            message[i] = readString();
+        }
+
+        return message;
+    }
+
+    public void writeArray(String[] list){
+
+        // Send number of items to expect
+        writeInteger(list.length);
+
+        // Send each item in the list
+        for(String item : list){
+            writeString(item);
+        }
+
     }
 
 }

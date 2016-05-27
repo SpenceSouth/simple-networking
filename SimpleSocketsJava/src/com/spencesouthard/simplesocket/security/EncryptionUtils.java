@@ -1,4 +1,4 @@
-package SimpleSocketsJava.Security;
+package com.spencesouthard.simplesocket.security;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
@@ -12,8 +12,6 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
-import static org.omg.IOP.TAG_ORB_TYPE.value;
 
 
 public class EncryptionUtils {

@@ -1,6 +1,6 @@
-package SimpleSocketsJava;
+package com.spencesouthard.simplesocket;
 
-import SimpleSocketsJava.Security.EncryptionUtils;
+import com.spencesouthard.simplesocket.security.EncryptionUtils;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;

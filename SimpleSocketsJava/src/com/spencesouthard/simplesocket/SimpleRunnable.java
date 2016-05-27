@@ -1,4 +1,4 @@
-package SimpleSocketsJava;
+package com.spencesouthard.simplesocket;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;

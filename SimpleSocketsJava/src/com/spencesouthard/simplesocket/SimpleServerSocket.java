@@ -11,6 +11,7 @@ import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class SimpleServerSocket<SimpleRunnableType extends SimpleRunnable> extends ServerSocket{
 
@@ -90,6 +91,10 @@ public class SimpleServerSocket<SimpleRunnableType extends SimpleRunnable> exten
             executorService.execute(socketThread);
 
         }
+    }
+
+    public int getLoad(){
+        return ((ThreadPoolExecutor) executorService).getActiveCount();
     }
 
 }
